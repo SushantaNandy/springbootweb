@@ -1,0 +1,3 @@
+2024-10-17 20:23:14.572975+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "NAME CHARACTER VARYING(255)": "'kbnbbnbvsbxv bhsv xhv shgxcvsvcxhgvcghvhgsvhgcvhgcaghscgacsgfacsgcagfscgscghvcs... (302)"; SQL statement:
+insert into employees (age,date_of_joining,email,is_active,name,id) values (?,?,?,?,?,?) [22001-224]

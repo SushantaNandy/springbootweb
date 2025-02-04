@@ -2,6 +2,7 @@ package com.example.springbootweb.springbootweb.services;
 
 import com.example.springbootweb.springbootweb.dto.EmployeeDTO;
 import com.example.springbootweb.springbootweb.entities.EmployeeEntity;
+import com.example.springbootweb.springbootweb.exceptions.ResourceNotFoundException;
 import com.example.springbootweb.springbootweb.repositories.EmployeeRepository;
 import org.apache.el.util.ReflectionUtil;
 import org.modelmapper.ModelMapper;
@@ -61,13 +62,18 @@ public class EmployeeService {
         return  modelMapper.map(savedEmployeeEntity, EmployeeDTO.class);
     }
 
-    public String deleteEmployeeById(Long employeeID) {
-        if (employeeRepository.existsById(employeeID)){
-            employeeRepository.deleteById(employeeID);
-            return "Deleted Sucessfully user by id "+employeeID;
-        }
-            return "Employee id doesn't exist";
+    public boolean isExistByEmployeeId(Long employeeId){ return employeeRepository.existsById(employeeId);}
 
+    public String deleteEmployeeById(Long employeeID) {
+//        if (employeeRepository.existsById(employeeID)){
+//            employeeRepository.deleteById(employeeID);
+//            return "Deleted Sucessfully user by id "+employeeID;
+//        }
+//            return "Employee id doesn't exist";
+        boolean exist = isExistByEmployeeId(employeeID);
+        if (!exist) throw new ResourceNotFoundException("Employee Not found with id "+employeeID);
+        employeeRepository.deleteById(employeeID);
+        return "Deleted Sucessfully user by id "+employeeID;
     }
 
     public EmployeeDTO updatePartialEmployeeById(Map<String, Objects> updates, Long employeeID) {
